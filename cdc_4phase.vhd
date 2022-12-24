@@ -35,13 +35,14 @@ architecture arch of cdc_4phase is
 begin
 
 	--clock domain A
-	sync_ack_in_A : process(i_clk_A)
-	begin
-		if(rising_edge(i_clk_A)) then
-			r_ack_metaA <= r_ack;
-			r_ack_syncA <= r_ack;
-		end if;
-	end process; -- sync_ack_in_A
+	ff_synchronizerA: entity work.ff_synchronizer(rtl)
+	generic map(
+		g_stages => 2)
+	port map(
+		i_clk => i_clk_A, 	
+		i_rst => i_rst_A,
+		i_async_s => r_ack,
+		o_sync_s =>r_ack_syncA);
 
 	handshake_FSM_tx : process(i_clk_A)
 	begin
@@ -77,13 +78,14 @@ begin
 	end process; -- handshake_FSM_tx
 
 	--clock domain B
-	sync_req_in_B : process(i_clk_B)
-	begin
-		if(rising_edge(i_clk_B)) then
-			r_req_metaB <= r_req;
-			r_req_syncB <= r_req_metaB;
-		end if;
-	end process; -- sync_req_in_B
+	ff_synchronizer_B: entity work.ff_synchronizer(rtl)
+	generic map(
+		g_stages => 2)
+	port map(
+		i_clk => i_clk_B,
+		i_rst => i_rst_B,
+		i_async_s => r_req,
+		o_sync_s =>r_req_syncB);
 
 	handshake_FSM_rx : process(i_clk_B)
 	begin

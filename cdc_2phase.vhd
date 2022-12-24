@@ -6,7 +6,7 @@ use ieee.std_logic_1164.all;
 
 entity cdc_2phase is
 	generic (
-			g_width : natural :=12);
+			g_width : natural :=4);
 	port (
 			i_clk_A : in std_ulogic;
 			i_rst_A : in std_ulogic;
@@ -33,14 +33,14 @@ begin
 	w_ready <= '1' when r_req = r_ack_syncA else '0';
 	o_data_A <= i_data_A;
 	--clock domain A
-
-	sync_ack_A : process(i_clk_A)
-	begin
-		if(rising_edge(i_clk_A)) then
-			r_ack_sync <= r_ack;
-			r_ack_syncA <= r_ack_sync;
-		end if;
-	end process; -- sync_ack_A
+	sync_ack_A: entity work.ff_synchronizer(rtl)
+	generic map(
+		g_stages => 2)
+	port map(
+		i_clk => i_clk_A, 	
+		i_rst => i_rst_A,
+		i_async_s => r_ack,
+		o_sync_s =>r_ack_syncA);
 
 	handshake_A : process(i_clk_A)
 	begin
@@ -75,9 +75,13 @@ begin
 		end if;
 	end process; -- sync_req_B
 
-	handshake_B : process(i_clk_B) 
-	begin
-		r_req_sync <= r_req;
-		r_req_syncB <= r_req_sync;
-	end process; -- handshake_B
+	sync_ack_B: entity work.ff_synchronizer(rtl)
+	generic map(
+		g_stages => 2)
+	port map(
+		i_clk => i_clk_B, 	
+		i_rst => i_rst_B,
+		i_async_s => r_req,
+		o_sync_s =>r_req_syncB);
+
 end arch;

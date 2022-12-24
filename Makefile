@@ -6,6 +6,7 @@ TOPLEVEL_LANG ?= vhdl
 EXTRA_ARGS += --std=08
 SIM_ARGS += --wave=wave.ghw
 
+VHDL_SOURCES += $(PWD)/ff_synchronizer.vhd
 VHDL_SOURCES += $(PWD)/cdc_4phase.vhd
 VHDL_SOURCES += $(PWD)/cdc_2phase.vhd
 # use VHDL_SOURCES for VHDL files

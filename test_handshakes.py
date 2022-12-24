@@ -18,6 +18,7 @@ def test_cdc_handshake_4phase(g_width):
     module = "testbench_4phase"
     toplevel = "cdc_4phase"   
     vhdl_sources = [
+        os.path.join(rtl_dir, "ff_synchronizer.vhd"),
         os.path.join(rtl_dir, "cdc_4phase.vhd"),
         ]
 
@@ -47,6 +48,7 @@ def test_cdc_handshake_2phase(g_width):
     module = "testbench_2phase"
     toplevel = "cdc_2phase"   
     vhdl_sources = [
+        os.path.join(rtl_dir, "ff_synchronizer.vhd"),
         os.path.join(rtl_dir, "cdc_2phase.vhd"),
         ]
 

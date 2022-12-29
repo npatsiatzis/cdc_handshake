@@ -68,3 +68,7 @@ async def test(dut):
 		coverage_db["top.data"].add_threshold_callback(notify, 100)
 		number_cover(dut)
 
+
+	coverage_db.report_coverage(cocotb.log.info,bins=True)
+	coverage_db.export_to_xml(filename="coverage_4phase.xml")
+

@@ -1,3 +1,8 @@
+![example workflow](https://github.com/npatsiatzis/cdc_handshake/actions/workflows/regression.yml/badge.svg)
+![example workflow](https://github.com/npatsiatzis/cdc_handshake/actions/workflows/coverage.yml/badge.svg)
+![example workflow](https://github.com/npatsiatzis/cdc_handshake/actions/workflows/regression_pyuvm.yml/badge.svg)
+![example workflow](https://github.com/npatsiatzis/cdc_handshake/actions/workflows/coverage_pyuvm.yml/badge.svg)
+
 
 ### RTL implementation of handshake methods for CDC of data buses (multi-bit signals)
 

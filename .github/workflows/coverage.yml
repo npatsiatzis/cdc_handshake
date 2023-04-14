@@ -37,14 +37,16 @@ jobs:
         ghdl --version
         $GHDL --version
     
-    - name: regression
+    - name: regression 4_phase
       run: |
-        make test
-        make test_2phase
+        cd cocotb_sim/ && make test
+    - name: regression 2_phase
+      run: |
+        cd cocotb_sim/ && make test_2phase
       
     - name: Functional Coverage
       run: |
-        var1=$(cat coverage_2phase.xml | grep -o -E 'cover_percentage.{0,5}' | head -1 | cut -f2- -d\")
+        cd cocotb_sim/ && var1=$(cat coverage_2phase.xml | grep -o -E 'cover_percentage.{0,5}' | head -1 | cut -f2- -d\")
         if [ $var1 = 100 ]; then exit 0; else exit 1; fi
-        var2=$(cat coverage_4phase.xml | grep -o -E 'cover_percentage.{0,5}' | head -1 | cut -f2- -d\")
+        cd cocotb_sim/ && var2=$(cat coverage_4phase.xml | grep -o -E 'cover_percentage.{0,5}' | head -1 | cut -f2- -d\")
         if [ $var2 = 100 ]; then exit 0; else exit 1; fi

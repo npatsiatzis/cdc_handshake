@@ -6,9 +6,9 @@ TOPLEVEL_LANG ?= vhdl
 EXTRA_ARGS += --std=08
 SIM_ARGS += --wave=wave.ghw
 
-VHDL_SOURCES += $(PWD)/../rtl/ff_synchronizer.vhd
-VHDL_SOURCES += $(PWD)/../rtl/cdc_4phase.vhd
-VHDL_SOURCES += $(PWD)/../rtl/cdc_2phase.vhd
+VHDL_SOURCES += $(PWD)/../rtl/VHDL/ff_synchronizer.vhd
+VHDL_SOURCES += $(PWD)/../rtl/VHDL/cdc_4phase.vhd
+VHDL_SOURCES += $(PWD)/../rtl/VHDL/cdc_2phase.vhd
 # use VHDL_SOURCES for VHDL files
 
 # TOPLEVEL is the name of the toplevel module in your Verilog or VHDL file

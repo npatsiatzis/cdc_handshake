@@ -8,9 +8,5 @@
 - Closed-Loop sampling (implements an acknowledge protocol at CDC boundary)
 - Accomodates the data crossing irrespective of frequecy/phase difference between the domains
 - Suffers from greater latency compared to other methods
+- CoCoTB testbench for functional verification
 
--- RTL code in:
-- [VHDL](https://github.com/npatsiatzis/cdc_handshake/tree/main/rtl/VHDL)
-
--- Functional verification with methodologies:
-- [cocotb](https://github.com/npatsiatzis/cdc_handshake/tree/main/cocotb_sim)

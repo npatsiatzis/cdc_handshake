@@ -11,6 +11,7 @@
 
 -- RTL code in:
 - [VHDL](https://github.com/npatsiatzis/cdc_handshake/tree/main/rtl/VHDL)
+- [SystemVerilog](https://github.com/npatsiatzis/cdc_handshake/tree/main/rtl/SystemVerilog)
 
 -- Functional verification with methodologies:
 - [cocotb](https://github.com/npatsiatzis/cdc_handshake/tree/main/cocotb_sim)

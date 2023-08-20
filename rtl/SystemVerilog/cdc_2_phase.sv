@@ -37,7 +37,7 @@ module cdc_2_phase
             o_ready_A <= 1'b0;
         end else begin
             o_ready_A <= w_ready;
-            if(i_valid_A && o_ready_A)
+            if(i_valid_A && w_ready)
                 w_req <= 1'b1;
         end
      end

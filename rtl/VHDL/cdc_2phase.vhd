@@ -50,7 +50,7 @@ begin
 				o_ready_A <= '0';
 			else
 				o_ready_A <= w_ready;
-				if(i_valid_A = '1' and o_ready_A = '1') then
+				if(i_valid_A = '1' and w_ready = '1') then
 					r_req <= not r_req;
 				end if;
 			end if;

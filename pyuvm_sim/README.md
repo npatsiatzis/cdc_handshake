@@ -1,5 +1,3 @@
-![example workflow](https://github.com/npatsiatzis/cdc_handshake/actions/workflows/regression.yml/badge.svg)
-![example workflow](https://github.com/npatsiatzis/cdc_handshake/actions/workflows/coverage.yml/badge.svg)
 ![example workflow](https://github.com/npatsiatzis/cdc_handshake/actions/workflows/regression_pyuvm.yml/badge.svg)
 ![example workflow](https://github.com/npatsiatzis/cdc_handshake/actions/workflows/coverage_pyuvm.yml/badge.svg)
 
@@ -11,10 +9,8 @@
 - Accomodates the data crossing irrespective of frequecy/phase difference between the domains
 - Suffers from greater latency compared to other methods
 
--- RTL code in:
-- [VHDL](https://github.com/npatsiatzis/cdc_handshake/tree/main/rtl/VHDL)
-- [SystemVerilog](https://github.com/npatsiatzis/cdc_handshake/tree/main/rtl/SystemVerilog)
+- run pyuvm testbench
+    - $ make
+- run unit testing of the pyuvm testbench
+    - $  SIM=ghdl pytest -n auto -o log_cli=True --junitxml=test-results.xml --cocotbxml=test-cocotb.xml
 
--- Functional verification with methodologies:
-- [cocotb](https://github.com/npatsiatzis/cdc_handshake/tree/main/cocotb_sim)
-- [pyuvm](https://github.com/npatsiatzis/cdc_handshake/tree/main/pyuvm_sim)

@@ -15,7 +15,7 @@ rtl_dir = tests_dir                                    #path to hdl folder where
 @pytest.mark.parametrize("parameter", [{"g_width": str(i)} for i in range(4,9,4)])
 def test_4phase(parameter):
 
-    module = "tb"
+    module = "tb_4phase"
     toplevel = "cdc_4phase"   
     vhdl_sources = [
         os.path.join(rtl_dir, "../rtl/VHDL/ff_synchronizer.vhd"),
@@ -43,7 +43,7 @@ def test_4phase(parameter):
 @pytest.mark.parametrize("parameter", [{"g_width": str(i)} for i in range(4,9,4)])
 def test_2phase(parameter):
 
-    module = "tb"
+    module = "tb_2phase"
     toplevel = "cdc_2phase"   
     vhdl_sources = [
         os.path.join(rtl_dir, "../rtl/VHDL/ff_synchronizer.vhd"),

@@ -17,7 +17,10 @@ module cdc_4_phase
         input logic i_clk_B,
         input logic i_rst_B,
         output logic o_busy_B,
-        output logic [G_WIDTH - 1 : 0] o_data_B
+        output logic [G_WIDTH - 1 : 0] o_data_B,
+        output logic f_busy_A_prev,
+        output logic r_req_sync,
+        output logic f_req_sync_prev
     );
 
     typedef enum logic [1 : 0] {REQ_ASSERT,REQ_DEASSERT,END_TRANSACTION} states_tx_t;
@@ -45,7 +48,10 @@ module cdc_4_phase
             state_TX <= REQ_ASSERT;
             o_busy_A <= 1'b1;
             r_req <= 1'b0;
+            f_busy_A_prev <= 1'b0;
         end else begin
+            f_busy_A_prev <= o_busy_A;
+
             case (state_TX)
                 REQ_ASSERT : begin
                     o_busy_A <= 1'b0;
@@ -85,8 +91,10 @@ module cdc_4_phase
             r_ack <= 1'b0;
             o_busy_B <= 1'b0;
             o_data_B <= '0;
+            f_req_sync_prev <= 1'b0;
         end else begin
             o_busy_B <= 1'b0;
+            f_req_sync_prev <= r_req_sync;
 
             case (state_RX)
                 ACK_ASSERT :

@@ -18,7 +18,9 @@ module cdc_2_phase
         input logic i_clk_B,
         input logic i_rst_B,
         output logic o_valid_B,
-        output logic [G_WIDTH - 1 : 0] o_data_B
+        output logic [G_WIDTH - 1 : 0] o_data_B,
+        output logic f_ready_A_prev,
+        output logic f_valid_B_prev
     );
 
     logic w_ready;
@@ -35,10 +37,13 @@ module cdc_2_phase
         if(i_rst_A) begin
             w_req <= 1'b0;
             o_ready_A <= 1'b0;
+            f_ready_A_prev <= 1'b0;
         end else begin
             o_ready_A <= w_ready;
+            f_ready_A_prev <= o_ready_A;
+
             if(i_valid_A && w_ready)
-                w_req <= 1'b1;
+                w_req <= ~w_req;
         end
      end
 
@@ -53,12 +58,16 @@ module cdc_2_phase
         if(i_rst_B) begin
             w_ack <= 1'b0;
             o_valid_B <= 1'b0;
+            f_valid_B_prev <= 1'b0;
         end else begin
+            f_valid_B_prev <= o_valid_B;
+
             if (w_ack != r_req_sync) begin
                 w_ack <= ~w_ack;
                 o_valid_B <= 1'b1;
                 o_data_B <= o_data_A;
-            end
+            end else 
+                o_valid_B <= 1'b0; 
         end
     end
 

@@ -19,3 +19,4 @@
 - [cocotb](https://github.com/npatsiatzis/cdc_handshake/tree/main/cocotb_sim)
 - [pyuvm](https://github.com/npatsiatzis/cdc_handshake/tree/main/pyuvm_sim)
 - [uvm](https://github.com/npatsiatzis/cdc_handshake/tree/main/uvm_sim)
+- [verilator](https://github.com/npatsiatzis/cdc_handshake/tree/main/verilator_sim)

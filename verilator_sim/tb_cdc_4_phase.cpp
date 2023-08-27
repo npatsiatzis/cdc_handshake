@@ -5,6 +5,7 @@
 #include <memory>
 #include <verilated.h>
 #include <verilated_vcd_c.h>
+#include "Vcdc_4_phase___024root.h"
 #include "Vcdc_4_phase.h"
 #include "Vcdc_4_phase_cdc_4_phase.h"   //to get parameter values, after they've been made visible in SV
 
@@ -72,7 +73,7 @@ class OutCoverage {
         }
 
         bool is_full_coverage(){
-            return cvg_size == (1 << (Vcdc_4_phase_cdc_4_phase::G_WIDTH))-1;
+            return cvg_size == (1 << (Vcdc_4_phase_cdc_4_phase::G_WIDTH));
             // return coverage.size() == (1 << (Vcdc_4_phase_cdc_4_phase::G_WIDTH));
         }
 };
@@ -108,6 +109,7 @@ class Scb {
                 std::cout << "Test Failure!" << std::endl;
                 std::cout << "Expected : " <<  in->i_data_A << std::endl;
                 std::cout << "Got : " << tx->o_data_B << std::endl;
+                exit(1);
             } else {
                 std::cout << "Test PASS!" << std::endl;
                 std::cout << "Expected : " <<  in->i_data_A << std::endl;
@@ -145,16 +147,14 @@ class InDrv {
 
                         new_tx_ready = 0;
                         state = 1;
-                        // std::cout << "DRIVER drove " << tx->i_data_A << std::endl;
                         delete tx;
                      }
 
                     break;
                 case 1:
-                    if(is_a_pos == 1 && dut->r_req_sync == 0 && dut->f_req_sync_prev ==1){
+                    if(is_a_pos == 1 && dut->rootp->cdc_4_phase->r_ack_sync == 0 && dut->rootp->cdc_4_phase->f_ack_sync_prev ==1){
                         new_tx_ready = 1;
                         state = 0;
-                        // std::cout << "DRIVER DONE" << std::endl;
                     }
                     break;
                 default:
@@ -181,14 +181,13 @@ class InMon {
         }
 
         void monitor(int is_a_pos){
-            // if(dut->i_valid == 1){
-            if(is_a_pos ==1 && dut->o_busy_A == 1 && dut->f_busy_A_prev ==0) {
+            // access internal signals from the DUT
+            if(is_a_pos ==1 && dut->rootp->cdc_4_phase->r_ack_sync ==1 && dut->rootp->cdc_4_phase->f_ack_sync_prev ==0) {
                 InTx *tx = new InTx();
                 tx->i_data_A = dut->i_data_A;
                 // then pass the transaction item to the scoreboard
                 scb->writeIn(tx);
                 cvg->write_coverage(tx);
-                // std::cout << "MONITOR IN monitored " << tx->i_data_A << std::endl;
             }
         }
 };
@@ -221,47 +220,7 @@ class OutMon {
                 // then pass the transaction item to the scoreboard
                 scb->writeOut(tx);
                 cvg->write_coverage(tx);
-                // std::cout << "MONITOR OUT monitored THERE" << tx->o_data_B << std::endl;
             }
-
-            // switch(state) {
-            //     case 0:
-            //         if(is_b_pos == 1 && dut->r_req_sync == 0 && dut->f_req_sync_prev ==1) {
-            //             state = 1;
-            //          }
-
-            //         break;
-            //     case 1:
-            //         if(is_b_pos == 1) {
-            //             state = 2;
-            //         }
-            //         break;
-            //     case 2: 
-            //         if(is_b_pos == 1) {
-            //             state = 0;
-            //             OutTx *tx = new OutTx();
-            //             tx->o_data_B = dut->o_data_B;
-
-            //             // then pass the transaction item to the scoreboard
-            //             scb->writeOut(tx);
-            //             cvg->write_coverage(tx);
-            //             // std::cout << "MONITOR OUT monitored THERE" << tx->o_data_B << std::endl;
-            //         }
-            //         break;
-            //     default:
-            //         state = 0;
-            // }
-
-
-            // if(is_b_pos == 1 && dut->i_ren_r == 1 && dut->o_empty ==0) {
-            //     OutTx *tx = new OutTx();
-            //     tx->o_data_B = dut->o_data_B;
-
-            //     // then pass the transaction item to the scoreboard
-            //     scb->writeOut(tx);
-            //     cvg->write_coverage(tx);
-            //     std::cout << "MONITOR OUT monitored " << tx->o_data_B << std::endl;
-            // }
         }
 };
 
@@ -284,7 +243,7 @@ class Sequence{
         InTx* genTx(int & new_tx_ready){
             in = new InTx();
             // std::shared_ptr<InTx> in(new InTx());
-            if(rand()%5 == 0 && new_tx_ready == 1){
+            if(new_tx_ready == 1){
                 in->i_data_A = rand() % (1 << Vcdc_4_phase_cdc_4_phase::G_WIDTH);   
 
                 while(cvg->is_covered(in->i_data_A) == false){

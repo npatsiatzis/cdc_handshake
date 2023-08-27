@@ -1,4 +1,10 @@
-TOPLEVEL = cdc_4_phase
+TEST_4PHASE ?= 1
+ifeq ($(TEST_4PHASE),1)
+	TOPLEVEL = cdc_4_phase
+else
+	TOPLEVEL = cdc_2_phase
+endif
+
 MODULE = tb_$(TOPLEVEL).cpp
 RTL_DIR = $(PWD)/../rtl/SystemVerilog
 

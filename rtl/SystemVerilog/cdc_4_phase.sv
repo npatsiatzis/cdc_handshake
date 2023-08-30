@@ -4,7 +4,7 @@ module cdc_4_phase
     #
     (
         parameter int G_STAGES = 2,
-        parameter int G_WIDTH = 4
+        parameter int G_WIDTH /*verilator public*/ = 4
     )
 
     (
@@ -31,8 +31,9 @@ module cdc_4_phase
 
     logic r_req;
     logic r_ack;
-    logic r_ack_sync;
-    logic r_req_sync;
+    logic r_ack_sync /*verilator public_flat*/;
+    logic f_ack_sync_prev /*verilator public_flat*/;
+    // logic r_req_sync;
 
 
 
@@ -49,8 +50,10 @@ module cdc_4_phase
             o_busy_A <= 1'b1;
             r_req <= 1'b0;
             f_busy_A_prev <= 1'b0;
+            f_ack_sync_prev <= 1'b0;
         end else begin
             f_busy_A_prev <= o_busy_A;
+            f_ack_sync_prev <= r_ack_sync;
 
             case (state_TX)
                 REQ_ASSERT : begin
@@ -71,8 +74,10 @@ module cdc_4_phase
                         o_busy_A <= 1'b0;
                         state_TX <= REQ_ASSERT;
                     end
+                /*verilator coverage_off*/
                 default :
                     state_TX <= REQ_ASSERT;
+                /*verilator coverage_on*/
             endcase
         end
     end
@@ -112,8 +117,10 @@ module cdc_4_phase
                         r_ack <= 1'b0;
                     end
                 end
+                /*verilator coverage_off*/
                 default :
                     state_RX <= ACK_ASSERT;
+                /*verilator coverage_on*/
             endcase
         end
     end

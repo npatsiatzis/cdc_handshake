@@ -13,15 +13,6 @@
 - Accomodates the data crossing irrespective of frequecy/phase difference between the domains
 - Suffers from greater latency compared to other methods
 
--- RTL code in:
-- [VHDL](https://github.com/npatsiatzis/cdc_handshake/tree/main/rtl/VHDL)
-- [SystemVerilog](https://github.com/npatsiatzis/cdc_handshake/tree/main/rtl/SystemVerilog)
-
--- Functional verification with methodologies:
-- [cocotb](https://github.com/npatsiatzis/cdc_handshake/tree/main/cocotb_sim)
-- [pyuvm](https://github.com/npatsiatzis/cdc_handshake/tree/main/pyuvm_sim)
-- [uvm](https://github.com/npatsiatzis/cdc_handshake/tree/main/uvm_sim)
-- [verilator](https://github.com/npatsiatzis/cdc_handshake/tree/main/verilator_sim)
 
 
 | Folder | Description |
@@ -34,7 +25,7 @@
 | [verilator_sim](https://github.com/npatsiatzis/cdc_handshake/tree/main/verilator_sim) | Functional Verification with Verilator (C++ based) |
 
 
-<!-- 
+
 This is the tree view of the strcture of the repo.
 <pre>
 <font size = "2">
@@ -57,4 +48,4 @@ This is the tree view of the strcture of the repo.
     ├── Makefile
     └── verilator tb
 
-</pre> -->
+</pre>

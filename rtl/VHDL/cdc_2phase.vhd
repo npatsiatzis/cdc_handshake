@@ -26,11 +26,11 @@ architecture arch of cdc_2phase is
 	signal r_req : std_ulogic;
 	signal r_ack : std_ulogic;
 
-	signal r_ack_sync,r_ack_syncA : std_ulogic;
-	signal r_req_sync,r_req_syncB : std_ulogic;
+	signal r_ack_sync,r_ack_synqA : std_ulogic;
+	signal r_req_sync,r_req_synqB : std_ulogic;
 begin
 
-	w_ready <= '1' when r_req = r_ack_syncA else '0';
+	w_ready <= '1' when r_req = r_ack_synqA else '0';
 	o_data_A <= i_data_A;
 	--clock domain A
 	sync_ack_A: entity work.ff_synchronizer(rtl)
@@ -40,7 +40,7 @@ begin
 		i_clk => i_clk_A, 	
 		i_rst => i_rst_A,
 		i_async_s => r_ack,
-		o_sync_s =>r_ack_syncA);
+		o_sync_s =>r_ack_synqA);
 
 	handshake_A : process(i_clk_A)
 	begin
@@ -65,7 +65,7 @@ begin
 			if(i_rst_B = '1') then
 				r_ack <= '0';
 				o_valid_B <= '0';
-			elsif(r_req_syncB /= r_ack) then
+			elsif(r_req_synqB /= r_ack) then
 				o_valid_B <= '1';
 				r_ack <= not r_ack;
 				o_data_B <= o_data_A;
@@ -82,6 +82,6 @@ begin
 		i_clk => i_clk_B, 	
 		i_rst => i_rst_B,
 		i_async_s => r_req,
-		o_sync_s =>r_req_syncB);
+		o_sync_s =>r_req_synqB);
 
 end arch;

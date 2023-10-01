@@ -4,7 +4,7 @@ module cdc_2_phase
     #
     (
         parameter int G_STAGES = 2,
-        parameter int G_WIDTH = 4
+        parameter int G_WIDTH /*verilator public*/ = 4
     )
 
     (
